@@ -1,61 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detect Number Plate</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: green;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
+    <link rel="stylesheet" type="text/css" href="{% static 'plate_detector/detect.css' %}">
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        form {
-            width: 100%; 
-            max-width: 500px; 
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-top: 20px;
-            padding-bottom: 200px;
-            background-color: brown; 
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        input[type="file"] {
-            display: block;
-            margin: 0 auto 20px;
-        }
-
-        button[type="submit"] {
-            display: block;
-            margin: 0 auto;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            position:bottom;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
 <body>
     <h1>Detect Number Plate</h1>
@@ -66,3 +17,5 @@
     </form>
 </body>
 </html>
+
+
