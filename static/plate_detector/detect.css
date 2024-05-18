@@ -4,7 +4,9 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: green;
+    background-image: url("p2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,32 +23,33 @@ h1 {
 form {
     width: 100%; 
     max-width: 500px; 
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 20px;
-    padding-bottom: 200px;
-    background-color: brown; 
+    padding: 40px; /* Increased padding for better spacing */
+    background-color: #fff; /* White background */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Slightly increased shadow */
 }
 
 input[type="file"] {
     display: block;
     margin: 0 auto 20px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ced4da; /* Light border */
+    border-radius: 4px;
 }
 
 button[type="submit"] {
     display: block;
     margin: 0 auto;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #007bff; /* Blue button */
     color: #fff;
     border: none;
-    position:bottom;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker blue on hover */
 }
