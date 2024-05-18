@@ -1,22 +1,32 @@
 /* plate_detector/static/plate_detector/result.css */
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif; /* Use a more modern font */
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-image: url("p3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 h1 {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 40px; /* Increased margin for better spacing */
+    font-size: 2rem; /* Larger font size */
+    color: white; /* Dark gray color */
 }
 
 img {
     display: block;
     margin: 0 auto;
-    max-width: 100%;
+    max-width: 50%; /* Reduce maximum width to avoid stretching */
     height: auto;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-top: 40px; /* Increased margin for better spacing */
+    transition: transform 0.3s ease; /* Add a smooth transition */
+}
+
+img:hover {
+    transform: scale(1.05); /* Scale up image on hover */
 }

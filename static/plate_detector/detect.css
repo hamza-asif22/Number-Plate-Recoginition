@@ -16,7 +16,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: white;
     margin-bottom: 20px;
 }
 
@@ -53,3 +53,4 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
+
