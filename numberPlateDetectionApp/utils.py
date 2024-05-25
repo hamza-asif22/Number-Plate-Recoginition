@@ -1,10 +1,14 @@
 # plate_detector/utils.py
+import pytesseract
+import PIL.Image
 import cv2
 import numpy as np
 
 def process_image(image_path, filename):
     # Read uploaded image
     I = cv2.imread(image_path)
+    
+
 
     # Perform image processing operations
     Igray = cv2.cvtColor(I, cv2.COLOR_BGR2GRAY)
@@ -116,7 +120,11 @@ def process_image(image_path, filename):
                     (max_vert >= row[i] and max_vert <= row[i + 1])):
                 I[row[i]:row[i + 1], column[j]:column[j + 1]] = 0
 
-    # Return processed image path
     processed_image_path = 'media/processed_' + filename
     cv2.imwrite(processed_image_path, I)
-    return processed_image_path
+   
+    # OCR using Tesseract on the original image
+    my_config = r"--psm 7 --oem 1 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    text = pytesseract.image_to_string(PIL.Image.open(processed_image_path), config=my_config)
+
+    return processed_image_path, text
