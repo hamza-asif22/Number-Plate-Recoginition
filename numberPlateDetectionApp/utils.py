@@ -1,25 +1,22 @@
-# plate_detector/utils.py
 import pytesseract
 import PIL.Image
 import cv2
 import numpy as np
+import os
 
 def process_image(image_path, filename):
     # Read uploaded image
     I = cv2.imread(image_path)
-    
-
+    if I is None:
+        raise FileNotFoundError(f"Image not found at {image_path}")
 
     # Perform image processing operations
     Igray = cv2.cvtColor(I, cv2.COLOR_BGR2GRAY)
     rows, cols = Igray.shape
 
     # Dilate and Erode Image in order to remove noise
-    Idilate = np.copy(Igray)
-    for i in range(rows):
-        for j in range(1, cols - 1):
-            temp = max(Igray[i, j - 1], Igray[i, j])
-            Idilate[i, j] = max(temp, Igray[i, j + 1])
+    kernel = np.ones((3, 3), np.uint8)
+    Idilate = cv2.dilate(Igray, kernel, iterations=1)
     I = Idilate
 
     difference = 0
@@ -34,10 +31,7 @@ def process_image(image_path, filename):
     for i in range(1, cols):
         total_sum = 0
         for j in range(1, rows):
-            if I[j, i] > I[j - 1, i]:
-                difference = np.uint32(I[j, i] - I[j - 1, i])
-            else:
-                difference = np.uint32(I[j - 1, i] - I[j, i])
+            difference = np.abs(np.int32(I[j, i]) - np.int32(I[j - 1, i]))
             if difference > 20:
                 total_sum += difference
         horz1[i] = total_sum
@@ -45,19 +39,15 @@ def process_image(image_path, filename):
             max_horz = i
             maximum = total_sum
 
-    average = np.sum(horz1) / cols
+    average = np.mean(horz1)
 
     # Smoothen the Horizontal Histogram by applying Low Pass Filter
-    horz = np.copy(horz1)
-    for i in range(20, cols - 21):
-        horz[i] = np.sum(horz1[i - 20:i + 21]) / 41
+    horz = np.convolve(horz1, np.ones(41) / 41, mode='same')
 
     # Filter out Horizontal Histogram Values by applying Dynamic Threshold
     print('Filter out Horizontal Histogram...')
-    for i in range(cols):
-        if horz[i] < average:
-            horz[i] = 0
-            I[:, i] = 0
+    horz[horz < average] = 0
+    I[:, horz == 0] = 0
 
     # PROCESS EDGES IN VERTICAL DIRECTION
     print('Processing Edges Vertically...')
@@ -68,10 +58,7 @@ def process_image(image_path, filename):
     for i in range(1, rows):
         total_sum = 0
         for j in range(1, cols):
-            if I[i, j] > I[i, j - 1]:
-                difference = np.uint32(I[i, j] - I[i, j - 1])
-            else:
-                difference = np.uint32(I[i, j - 1] - I[i, j])
+            difference = np.abs(np.int32(I[i, j]) - np.int32(I[i, j - 1]))
             if difference > 20:
                 total_sum += difference
         vert1[i] = total_sum
@@ -79,18 +66,14 @@ def process_image(image_path, filename):
             max_vert = i
             maximum = total_sum
 
-    average = np.sum(vert1) / rows
+    average = np.mean(vert1)
 
     # Smoothen the Vertical Histogram by applying Low Pass Filter
-    vert = np.copy(vert1)
-    for i in range(20, rows - 21):
-        vert[i] = np.sum(vert1[i - 20:i + 21]) / 41
+    vert = np.convolve(vert1, np.ones(41) / 41, mode='same')
 
     # Filter out Vertical Histogram Values by applying Dynamic Threshold
-    for i in range(rows):
-        if vert[i] < average:
-            vert[i] = 0
-            I[i, :] = 0
+    vert[vert < average] = 0
+    I[vert == 0, :] = 0
 
     # Find Probable candidates for Number Plate
     column = []
@@ -120,9 +103,14 @@ def process_image(image_path, filename):
                     (max_vert >= row[i] and max_vert <= row[i + 1])):
                 I[row[i]:row[i + 1], column[j]:column[j + 1]] = 0
 
-    processed_image_path = 'media/processed_' + filename
+    processed_image_path = os.path.join('media', 'processed_' + filename)
+    print(f"Saving processed image to {processed_image_path}")
     cv2.imwrite(processed_image_path, I)
-   
+
+    # Ensure the file is saved correctly
+    if not os.path.isfile(processed_image_path):
+        raise FileNotFoundError(f"Failed to save the processed image at {processed_image_path}")
+
     # OCR using Tesseract on the original image
     my_config = r"--psm 7 --oem 1 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     text = pytesseract.image_to_string(PIL.Image.open(processed_image_path), config=my_config)

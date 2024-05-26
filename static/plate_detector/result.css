@@ -1,32 +1,57 @@
 /* plate_detector/static/plate_detector/result.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
-    font-family: 'Roboto', sans-serif; /* Use a more modern font */
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-image: url("p3.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    color: #ffffff; /* White text color for better contrast */
+    background-blend-mode: overlay; /* Blend background for a darker effect */
 }
 
 h1 {
     text-align: center;
-    margin-top: 40px; /* Increased margin for better spacing */
-    font-size: 2rem; /* Larger font size */
-    color: white; /* Dark gray color */
+    margin-top: 40px;
+    font-size: 2.5rem; /* Larger font size */
+    color: #f1c40f; /* Bright yellow color for better visibility */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for depth */
 }
 
 img {
     display: block;
-    margin: 0 auto;
-    max-width: 50%; /* Reduce maximum width to avoid stretching */
+    margin: 40px auto;
+    max-width: 60%; /* Slightly larger max width */
     height: auto;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    margin-top: 40px; /* Increased margin for better spacing */
-    transition: transform 0.3s ease; /* Add a smooth transition */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
 img:hover {
-    transform: scale(1.05); /* Scale up image on hover */
+    transform: scale(1.1); /* Larger scale on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem; /* Larger font size */
+    color: #e74c3c; /* Bright red color for visibility */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+    margin-top: 30px;
+}
+
+pre {
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
+    color: #ffffff; /* White text color */
+    font-size: 1.2rem; /* Slightly larger font size */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    max-width: 80%;
+    margin: 20px auto; /* Centered with margin */
+    overflow-x: auto; /* Scrollable if content overflows */
 }

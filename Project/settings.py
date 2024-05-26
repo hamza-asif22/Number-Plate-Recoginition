@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+
+
+
 
 # BASE_DIR is the directory that contains manage.py
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +26,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Template files
 TEMPLATES = [
