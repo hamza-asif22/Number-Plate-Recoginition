@@ -14,7 +14,9 @@ def detect_plate(request):
         # Process the uploaded image
         input_image_path = os.path.join(settings.MEDIA_ROOT, filename)
         processed_image_path, ocr_text = process_image(input_image_path, filename)
-        processed_image_url = fs.url(processed_image_path)
+        
+        # Here we ensure that processed_image_path is a relative path
+        processed_image_url = settings.MEDIA_URL + os.path.basename(processed_image_path)
 
         # Render the result page with the processed image and OCR text
         return render(request, 'plate_detector/result.html', {
@@ -23,4 +25,3 @@ def detect_plate(request):
         })
 
     return render(request, 'plate_detector/detect_plate.html')
-
